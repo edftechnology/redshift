@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+authors:
+  - family-names: SANTOS
+    given-names: EDEN
+    orcid: https://orcid.org/????-????-????-????
+title: 'Audithas: This application creates an Excel workbook with the statistical summary of the variables in a 
+database. Good fun.'
+version: 0.0.1
+date-released: '2025-02-02'
+url: https://github.com/edendenis/audithas
+doi: ???????10.5281/zenodo.14711872
+identifiers:
+  - description: DOI for this application's record on Zenodo
+    type: doi
