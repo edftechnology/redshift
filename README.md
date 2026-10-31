@@ -1,365 +1,223 @@
-<!-- LOGOTIPO DO PROJETO -->
-<div style="display: flex; justify-content: center;">
-   <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">
-     <img src="docs/figures/logo.png" alt="Logo" width="200" height="100">
-   </a>
-</div>
-
-<h3 align="center">NomeDoProjeto</h3>
-
-<div style="display: flex; justify-content: center;">
-  <a href="https://doi.org/SEU-DOI">
-    <img src="https://zenodo.org/badge/SEU_BADGE.svg" alt="DOI">
-  </a>
-</div>
-
-<p align="center">
- Uma descrição curta e genérica do projeto. Substitua por um resumo real quando usar este template.
- <br />
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO"><strong>Explore os documentos »</strong></a>
- <br />
- <br />
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Ver demonstração</a>
- ·
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Relatar bug</a>
- ·
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Solicitar recurso</a>
-</p>
-
-
-
+# Como instalar/configurar/usar o `redshift` no `Linux Ubuntu`
 
 ## Resumo
 
-Resumo genérico do projeto. Explique o problema, o objetivo e o valor da solução em 2-4 linhas.
+Guia para instalar, verificar, utilizar e remover o `redshift` e a interface gráfica `redshift-gtk` no `Linux Ubuntu`, usando os pacotes oficiais da distribuição. Inclui diagnóstico do aviso `dbind-WARNING` sem presumir que ele impeça o funcionamento.
 
 ## _Abstract_
 
-_Generic abstract in English. Summarize the purpose, scope, and outputs in 2-4 lines._
-
-
+_A guide to install, verify, use, and remove `redshift` and its graphical interface `redshift-gtk` on `Linux Ubuntu` using distribution packages. It also covers the `dbind-WARNING` without assuming that it prevents the application from working._
 
 ## Descrição
 
-`<nome_da_aplicacao>`
+### `redshift`
 
-Colocar a descrição da aplicação/subaplicação aqui.
+O `redshift` ajusta a temperatura de cor da tela conforme o horário e a localização. O pacote `redshift-gtk` fornece uma interface gráfica e um ícone de área de notificação. A disponibilidade do ícone depende do ambiente gráfico; instalar o pacote não inicia automaticamente o ajuste da tela.
 
-<!-- COMEÇANDO -->
-### Começando
+## Pré-requisitos
 
-Este template mostra como documentar a configuração local do projeto. Substitua pelos passos reais.
+- Usar uma versão do `Linux Ubuntu` com repositório `universe` habilitado.
+- Ter acesso a uma sessão gráfica compatível com o método de ajuste de tela do sistema.
+- Ter permissão administrativa para usar `sudo` e conexão à internet para instalar os pacotes.
+- Para localização automática, permitir que o provedor de localização funcione. A alternativa é configurar coordenadas manualmente, sem compartilhar a localização em comandos enviados a terceiros.
 
+## 1. Abrir o `Terminal Emulator`
 
+1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando:
 
-### Pré-requisitos
-
-Lista genérica de ferramentas necessárias. Ajuste versões e remova o que não se aplica.
-
-* [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-
-* [![Anaconda](https://img.shields.io/badge/Anaconda-4.x-44A833?style=flat-square&logo=anaconda&logoColor=white)](https://www.anaconda.com/)
-
-* [![Git](https://img.shields.io/badge/Git-2.x-F05032?style=flat-square&logo=git&logoColor=white)](https://git-scm.com/)
-
-* [![VS Code](https://img.shields.io/badge/VS%20Code-1.x-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white)](https://code.visualstudio.com/) ou qualquer IDE compatível
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-## Guia de instalação
-
-### Instalar o Git
-
-Explique como instalar o Git ou remova esta seção se não for necessária.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-## Guia de instalação
-
-### Instalar o Git
-
-Reforço do conteúdo ou seção extra. Mantenha ou remova conforme o uso do template.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-#### `Windows` [2]
-
-Explique como configurar SSH no Windows (ou ajuste para o provedor desejado).
-
-1. Verifique se o Git está instalado.
-2. Abra o Git Bash.
-3. Gere uma chave SSH (`ssh-keygen -t rsa -C "seu_email@exemplo.com"`).
-4. Adicione a chave no provedor (GitHub/GitLab/Bitbucket).
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-### Atualizar pacotes `pip` e `setuptools` [3]
-
-Exemplo genérico de atualização de pacotes:
-
-1. `pip install --upgrade pip`
-2. `pip install --upgrade setuptools`
-3. `pip install --upgrade wheel`
-
-
-
-### Clonar o repositório do Git e instalar dependências
-
-#### `Linux`
-
-1. **Clone o repositório:**
-
-  - **Pelo terminal:** `git clone git@github.com:SEU-USUARIO/SEU-PROJETO.git`
-
-  - **(Ou)** baixar o `.zip` na página do GitHub
-
-  <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-#### `Windows`
-
-1. **Clone o repositório:**
-
-  - **Pelo terminal:** `git clone git@github.com:SEU-USUARIO/SEU-PROJETO.git`
-
-  - (Ou) baixar o `.zip` na página do GitHub
-
-  <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-## Como executar a aplicação
-
-### Executar a partir do `Terminal Emulator`
-
-1. Exemplo genérico de execução:
-
-```bash
-python3 main.py --input caminho/para/arquivo --output caminho/para/saida
+```text
+Ctrl + Alt + T
 ```
 
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
+2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
+    2.1 Limpar o `cache` do gerenciador de pacotes `apt`. Especificamente, ele remove todos os arquivos de pacotes (`.deb`) baixados pelo `apt` e armazenados em `/var/cache/apt/archives/`. Digite o seguinte comando:
 
+    ```bash
+    sudo apt clean
+    ```
 
+    2.2 Remover pacotes `.deb` antigos ou duplicados do `cache` local. É útil para liberar espaço, pois remove apenas os pacotes que não podem mais ser baixados (ou seja, versões antigas de pacotes que foram atualizados). Digite o seguinte comando:
 
-### Executar a partir da `Graphical User Interface (GUI)`
+    ```bash
+    sudo apt autoclean
+    ```
 
-1. Exemplo genérico de execução:
+    2.3 Remover pacotes que foram automaticamente instalados para satisfazer as dependências de outros pacotes e que não são mais necessários. Digite o seguinte comando:
 
-```bash
-python3 scripts/app_gui.py
-```
+    ```bash
+    sudo apt autoremove -y
+    ```
 
+    2.4 Buscar as atualizações disponíveis para os pacotes que estão instalados em seu sistema. Digite o seguinte comando e pressione `Enter`:
 
+    ```bash
+    sudo apt update
+    ```
 
-## Mostrar ajuda
+    2.5 **Corrigir pacotes quebrados**: Isso atualizará a lista de pacotes disponíveis e tentará corrigir pacotes quebrados ou com dependências ausentes:
 
-1. Exemplo genérico de ajuda:
+    ```bash
+    sudo apt --fix-broken install
+    ```
 
-```bash
-python3 main.py --help
-```
+    2.6 Limpar o `cache` do gerenciador de pacotes `apt` novamente:
 
+    ```bash
+    sudo apt clean
+    ```
 
+    2.7 Para ver a lista de pacotes a serem atualizados, digite o seguinte comando e pressione `Enter`:
 
-### Exemplo de Saída Esperada
+    ```bash
+    sudo apt list --upgradable
+    ```
 
-Exemplo genérico (substitua pelo help real do projeto):
+    2.8 Realmente atualizar os pacotes instalados para as suas versões mais recentes, com base na última vez que você executou `sudo apt update`. Digite o seguinte comando e pressione `Enter`:
 
-```bash
-usage: main.py [-h] --input INPUT [--output OUTPUT]
-```
+    ```bash
+    sudo apt full-upgrade -y
+    ```
 
+Os comandos de manutenção acima reproduzem o modelo, mas não são necessários para instalar o `redshift`. Em particular, `sudo apt autoremove -y` pode remover pacotes que deixaram de ser classificados como dependências e `sudo apt full-upgrade -y` pode atualizar ou remover vários pacotes do sistema. Revisar as alterações propostas e não executá-los automaticamente.
 
+## 3. Instalação via `apt`
 
-## O que o aplicativo faz?
+No `Ubuntu 22.04 LTS (Jammy)`, os pacotes `redshift` e `redshift-gtk` estão no componente `universe`. Instalar ambos para obter o utilitário de linha de comando e a interface gráfica.
 
-Describe in English, at a high level, what the application does and the main outputs.
+## 3.1 Código completo para instalar
 
-- Example capability 1
-- Example capability 2
-- Example capability 3
+1. Abrir o `Terminal Emulator` pelo atalho `Ctrl + Alt + T` (atalho de teclado; não digitar no terminal).
+2. Copiar e colar o bloco único abaixo. O `apt` pode solicitar confirmação e a senha administrativa.
 
+    ```bash
+    sudo apt update
+    sudo apt install redshift redshift-gtk -y
+    redshift -V
+    redshift -h
+    ```
 
+## 4. Verificação da instalação
 
+1. Consultar a origem e a versão instaladas:
 
-## O que o aplicativo exibe como saída(s)
+    ```bash
+    apt policy redshift redshift-gtk
+    dpkg-query -W -f='${db:Status-Abbrev} ${Package} ${Version}\n' redshift redshift-gtk
+    ```
 
-# Relatório de Análise de Dados
+2. Consultar a versão e as opções do utilitário:
 
-## 1. Introdução
+    ```bash
+    redshift -V
+    redshift -h
+    ```
 
-- Objetivo da análise: descrição genérica.
-- Descrição do conjunto de dados analisado: origem, tamanho, formato.
-- Metodologia utilizada para a análise.
+O resultado esperado é que `apt policy` mostre a versão instalada e a origem do repositório, e que `dpkg-query` indique estado instalado (`ii`). Não presumir que o ajuste de cor esteja ativo apenas porque os pacotes estão instalados.
 
-## 2. Estatísticas Gerais do Conjunto de Dados
+## 5. Configuração e utilização
 
-- Número total de variáveis.
-- Número total de registros.
-- Tipos de dados por variável.
-- Resumo da ocupação de memória.
+- Iniciar a interface gráfica pelo menu de aplicativos ou executar `redshift-gtk` em uma sessão gráfica. O ícone pode aparecer na área de notificação.
+- Consultar processos com `pgrep -a -x redshift` e `pgrep -a -x redshift-gtk`. Ausência de saída significa que não há processo com aquele nome exato no momento da consulta.
+- Consultar `redshift -p` para imprimir parâmetros atuais. Com localização automática, esse comando pode aguardar o provedor de localização; interromper com `Ctrl + C` se permanecer aguardando.
+- Aplicar temporariamente uma temperatura e brilho manuais com `redshift -O 4500 -b 0.7`. Esse comando altera a imagem da tela. Restaurar a correção de cor com `redshift -x`.
+- Verificar a ajuda local com `redshift -h` e o manual com `man redshift`.
 
-## 3. Qualidade dos Dados
+## 6. Diagnóstico do aviso de acessibilidade GTK
 
-- Valores faltantes: contagem e percentual.
-- Valores únicos por variável.
-- Distribuição de valores nulos ou infinitos.
-- Detecção de espaços em branco no início/fim.
+A mensagem `dbind-WARNING: Couldn't connect to accessibility bus` indica que a ponte de acessibilidade GTK não conseguiu conectar-se ao barramento AT-SPI indicado no aviso. Por si só, o aviso não prova que o `redshift-gtk` falhou; confirmar separadamente se o processo inicia e se a interface funciona.
 
-## 4. Estatísticas Descritivas das Variáveis Numéricas
+1. Consultar os processos e os identificadores da sessão:
 
-- Contagem de valores válidos.
-- Média, mediana, moda.
-- Desvio padrão e variância.
-- Valor mínimo e máximo.
-- Quartis.
+    ```bash
+    pgrep -a -x redshift
+    pgrep -a -x redshift-gtk
+    id -u
+    printf 'XDG_RUNTIME_DIR=%s\nDBUS_SESSION_BUS_ADDRESS=%s\nXDG_SESSION_TYPE=%s\n' \
+      "$XDG_RUNTIME_DIR" "$DBUS_SESSION_BUS_ADDRESS" "$XDG_SESSION_TYPE"
+    ```
 
-## 5. Análise de Outliers
+2. Comparar o número em `/run/user/<UID>/` citado no aviso com a saída de `id -u` e `XDG_RUNTIME_DIR`. Uma diferença é uma pista para investigar o ambiente herdado pelo processo, não confirmação isolada de erro. Não alterar variáveis globais nem serviços do sistema sem identificar a sessão que inicia o programa.
 
-- Critério de outliers (ex.: 1.5x IQR).
-- Variáveis com maior presença de outliers.
+3. Como teste opcional por processo, executar `NO_AT_BRIDGE=1 redshift-gtk`. Isso desativa a ponte AT-SPI para esse processo; não usar se os recursos de acessibilidade dessa ponte forem necessários. Fechar a instância de teste pela interface ou interromper o processo no terminal.
 
-## 6. Correlações Entre Variáveis
+4. Para separar o aviso da capacidade de ajuste, executar os comandos de teste de cor da seção anterior somente quando for aceitável alterar temporariamente a imagem e executar `redshift -x` para restaurá-la.
 
-- Matriz de correlação.
-- Variáveis altamente correlacionadas.
+No ambiente desta verificação, `id -u` retornou `1000`, `XDG_RUNTIME_DIR` apontou para `/run/user/1000` e `redshift-gtk --help` reproduziu um aviso citando `/run/user/115`. Essa discrepância foi observada, mas sua causa não foi determinada. `redshift -p` aguardou localização por 12 segundos e foi encerrado pelo limite de tempo; portanto, não foi validado o estado de ajuste da tela.
 
-## 7. Estatísticas de Variáveis Categóricas
+## 7. Desinstalação
 
-- Contagem de ocorrências por categoria.
-- Percentual de distribuição por categoria.
+1. Conferir se os pacotes estão instalados e qual repositório os fornece:
 
-## 8. Análise de Tendências Temporais (se aplicável)
+    ```bash
+    apt policy redshift redshift-gtk
+    dpkg-query -W -f='${db:Status-Abbrev} ${Package} ${Version}\n' redshift redshift-gtk 2>/dev/null || true
+    ```
 
-- Distribuição temporal dos dados.
-- Identificação de padrões sazonais.
+2. Remover os pacotes sem apagar, por padrão, arquivos de configuração do sistema ou arquivos pessoais:
 
-## 9. Conclusões e Próximos Passos
+    ```bash
+    sudo apt remove redshift redshift-gtk -y
+    ```
 
-- Resumo dos principais insights.
-- Sugestões de melhorias/transformações.
-- Próximos passos.
+3. Confirmar o estado posterior:
 
+    ```bash
+    dpkg -l redshift redshift-gtk
+    ```
 
-## Gráficos Essenciais no Relatório
+No resultado de `dpkg -l`, `un` indica que o pacote não está instalado e `rc` indica que o programa foi removido, mas restam arquivos de configuração do pacote. `apt remove` conserva esses arquivos; `apt purge` remove também a configuração mantida pelo gerenciador. Escolher `purge` somente se essa remoção for desejada. Configurações pessoais em `~/.config/redshift` não devem ser apagadas automaticamente.
 
-- Histogramas
-- Boxplots
-- Heatmap de correlação
-- Gráfico de dispersão
-- Gráficos de barras
-- Linha do tempo (se aplicável)
+4. Opcionalmente, inspecionar as dependências órfãs antes de qualquer remoção:
 
+    ```bash
+    apt autoremove
+    ```
 
+Revisar a lista proposta antes de confirmar. A operação pode remover dependências compartilhadas com outros programas; não executar automaticamente. A remoção não garante reversão integral de alterações do sistema.
 
-## 1. Função da Aplicação
+## 7.1 Código completo para desinstalar
 
-Descrição genérica da função principal do módulo.
+1. Abrir o `Terminal Emulator` pelo atalho `Ctrl + Alt + T` (atalho de teclado; não digitar no terminal).
+2. Copiar e colar o bloco único abaixo. Conferir a origem e o estado antes de remover.
 
-### 1.1 Entrada(s)
+    ```bash
+    apt policy redshift redshift-gtk
+    dpkg-query -W -f='${db:Status-Abbrev} ${Package} ${Version}\n' redshift redshift-gtk 2>/dev/null || true
+    sudo apt remove redshift redshift-gtk -y
+    dpkg -l redshift redshift-gtk
+    ```
 
-1. Formatos de arquivo suportados (ex.: `.csv`, `.xlsx`).
+Para eliminar configurações do sistema gerenciadas pelo pacote, substituir `remove` por `purge` conscientemente. Não incluir `apt autoremove` sem revisar previamente a lista que ele propõe.
 
-### 1.2 Saída(s)
+## Compatibilidade
 
-1. Descrição das saídas esperadas.
+Os pacotes consultados são os do `Linux Ubuntu 22.04 LTS (Jammy)`, versão `1.12-4.2ubuntu1`, no componente `universe`. O suporte ao ajuste da tela depende do método gráfico disponível na sessão; a instalação dos pacotes não garante compatibilidade com todo compositor ou sessão gráfica.
 
-
-
-## 2. Observação(ões)
-
-1. Observações gerais e boas práticas.
-2. Restrições conhecidas.
-
-
-
-# 3. Futura(s) Melhoria(s)
-
-- Lista de melhorias planejadas.
-
-
-
-<!-- LICENÇA -->
 ## Licença
 
-Distribuído sob a licença `MIT`. Consulte `LICENSE.txt` para obter mais informações.
+Este repositório inclui o arquivo `LICENSE.txt`. A licença do projeto do `redshift` é indicada no repositório oficial upstream; consultar essa fonte para os termos do aplicativo.
 
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
+## Contato e suporte
 
-
-
-<!-- ROTEIRO -->
-## Roteiro
-
-- [ ] Adicionar registro de alterações
-- [ ] Adicionar links de volta ao topo
-- [ ] Adicionar modelos adicionais com exemplos
-- [ ] Suporte multilíngue
-
-Consulte os problemas abertos para obter uma lista completa dos recursos propostos.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-<!-- CONTRIBUIÇÔES -->
-## Contribuições
-
-Explique como contribuir (fork, branch, PR, issues).
-
-1. Bifurque o projeto
-2. Crie sua ramificação (`git checkout -b feature/NovaFuncionalidade`)
-3. Confirme suas alterações (`git commit -m 'Describe change'`)
-4. Envie para a filial (`git push origin feature/NovaFuncionalidade`)
-5. Abra uma solicitação `pull`
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Agradecimentos
-
-* [Best README Template](https://github.com/othneildrew/Best-README-Template?tab=readme-ov-file)
-
-* [Choose an Open Source License](https://choosealicense.com)
-
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-
-* [Img Shields](https://shields.io)
-
-* [GitHub Pages](https://pages.github.com)
-
-* [Font Awesome](https://fontawesome.com)
-
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
+Para suporte sobre os pacotes, consultar a página do pacote no `Ubuntu` e, para o aplicativo, o repositório upstream do `redshift`. Ao relatar problemas, incluir versão, ambiente gráfico e mensagens relevantes, removendo dados pessoais e coordenadas de localização.
 
 ## Referências
 
-[1] Fonte ou documentação relevante.
-[2] Artigo, tutorial ou manual adicional.
-[3] Outro link útil.
+[1] UBUNTU DEVELOPERS.
+**Package: redshift**.
+Disponível em: <https://packages.ubuntu.com/jammy/redshift>.
+Ubuntu Packages.
+Acessado em: 31/10/2026.
 
+[2] UBUNTU DEVELOPERS.
+**Package: redshift-gtk**.
+Disponível em: <https://packages.ubuntu.com/jammy/redshift-gtk>.
+Ubuntu Packages.
+Acessado em: 31/10/2026.
+
+[3] LUND STEFFENSEN, Jon.
+**Redshift**.
+Disponível em: <https://github.com/jonls/redshift>.
+GitHub.
+Acessado em: 31/10/2026.
