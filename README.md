@@ -141,29 +141,77 @@ lon=SUBSTITUIR_PELA_LONGITUDE
 
 Não salvar os textos `SUBSTITUIR...` literalmente. Depois de salvar, reiniciar `redshift-gtk` e usar `redshift -p` para conferir os parâmetros calculados, sem alterar a tela. A configuração e os métodos disponíveis são descritos no arquivo de exemplo do projeto upstream [4].
 
-## 6. Diagnóstico do aviso de acessibilidade GTK
+## 6. Solução de problemas (Troubleshooting)
 
-A mensagem `dbind-WARNING: Couldn't connect to accessibility bus` indica que a ponte de acessibilidade GTK não conseguiu conectar-se ao barramento AT-SPI indicado no aviso. Por si só, o aviso não prova que o `redshift-gtk` falhou; confirmar separadamente se o processo inicia e se a interface funciona.
+### Diferenciar a interface do ajuste de cor
 
-No `Ubuntu 22.04`, a configuração documentada do `geoclue2` ainda aponta para a API de localização Wi-Fi do Mozilla Location Service. A Mozilla retirou o acesso de terceiros em 2024; por isso, a localização automática pode não retornar. Isso é uma causa possível, não a única. Preferir a configuração manual se não quiser depender desse serviço [5][6].
+O ícone do `redshift-gtk` indica que a interface de bandeja está ativa, mas não confirma que o ajuste de cor foi aplicado. A interface inicia um processo `redshift`; se esse processo falhar ao obter localização ou acessar o método gráfico, pode aparecer a janela `Failed to run Redshift`.
 
-1. Consultar os processos e os identificadores da sessão:
+Consultar os processos com:
 
     ```bash
-    pgrep -a -x redshift
     pgrep -a -x redshift-gtk
+    pgrep -a -x redshift
+    ```
+
+Se apenas `redshift-gtk` estiver ativo, conferir o erro da janela e o diagnóstico abaixo. Se ambos estiverem ativos, ainda confirmar a saída de `redshift -v -p` e a mudança visual da tela.
+
+### Aviso `dbind-WARNING` e barramento de acessibilidade
+
+A mensagem `Couldn't connect to accessibility bus` indica que o GTK não conseguiu conectar-se ao barramento AT-SPI, usado pelos recursos de acessibilidade. Ela não demonstra, por si só, que o ajuste de cor falhou; esse barramento é separado do funcionamento do `redshift` [7].
+
+Comparar o UID e as variáveis da sessão com o caminho `/run/user/<UID>/` citado no aviso:
+
+    ```bash
     id -u
     printf 'XDG_RUNTIME_DIR=%s\nDBUS_SESSION_BUS_ADDRESS=%s\nXDG_SESSION_TYPE=%s\n' \
       "$XDG_RUNTIME_DIR" "$DBUS_SESSION_BUS_ADDRESS" "$XDG_SESSION_TYPE"
     ```
 
-2. Comparar o número em `/run/user/<UID>/` citado no aviso com a saída de `id -u` e `XDG_RUNTIME_DIR`. Uma diferença é uma pista para investigar o ambiente herdado pelo processo, não confirmação isolada de erro. Não alterar variáveis globais nem serviços do sistema sem identificar a sessão que inicia o programa.
+Uma diferença é uma pista de ambiente de sessão inconsistente, não prova isolada da causa. Não alterar serviços ou variáveis globais sem identificar a origem. Como teste pontual, `NO_AT_BRIDGE=1 redshift-gtk` desativa a ponte AT-SPI para esse processo; não usar se os recursos de acessibilidade forem necessários e não definir globalmente essa variável.
 
-3. Como teste opcional por processo, executar `NO_AT_BRIDGE=1 redshift-gtk`. Isso desativa a ponte AT-SPI para esse processo; não usar se os recursos de acessibilidade dessa ponte forem necessários. Fechar a instância de teste pela interface ou interromper o processo no terminal.
+### `Unable to get location from provider`
 
-4. Para separar o aviso da capacidade de ajuste, executar os comandos de teste de cor da seção anterior somente quando for aceitável alterar temporariamente a imagem e executar `redshift -x` para restaurá-la.
+As mensagens `Waiting for initial location to become available` e `Unable to get location from provider` significam que o provedor `geoclue2` não entregou uma posição ao `redshift`. O ícone pode continuar visível, mas o agendamento automático de dia e noite fica sem a localização necessária.
 
-No ambiente desta verificação, `id -u` retornou `1000`, `XDG_RUNTIME_DIR` apontou para `/run/user/1000` e `redshift-gtk --help` reproduziu um aviso citando `/run/user/115`. Essa discrepância foi observada, mas sua causa não foi determinada. `redshift -p` aguardou localização por 12 segundos e foi encerrado pelo limite de tempo; portanto, não foi validado o estado de ajuste da tela.
+No `Ubuntu 22.04`, a configuração do `geoclue2` aponta para a API Wi-Fi do Mozilla Location Service; a Mozilla retirou o acesso de terceiros em 2024. Portanto, essa API pode explicar a espera, embora permissões, conectividade ou outros problemas do `geoclue2` também possam causá-la [5][6].
+
+Para não depender de localização automática nem enviar coordenadas a um serviço, usar a configuração manual local descrita na subseção `Configuração manual sem localização automática`. No pacote Ubuntu, salvar o arquivo diretamente em `~/.config/redshift.conf`; não usar `~/.config/redshift/redshift.conf`, pois o perfil AppArmor do pacote pode bloquear esse caminho. Reiniciar o `redshift-gtk` depois de salvar.
+
+### `Could not connect to wayland display`
+
+O `redshift` pode tentar o método `wayland` e depois procurar outro método. A mensagem `Trying next method` indica uma tentativa de fallback; ela não informa se o método seguinte funcionou.
+
+Em uma sessão X11, conferir `XDG_SESSION_TYPE` e `DISPLAY`, listar os métodos disponíveis com `redshift -m list` e definir `adjustment-method=randr` no arquivo `~/.config/redshift.conf`. Em uma sessão Wayland, não forçar `randr`; selecionar um método compatível listado pelo próprio `redshift` e pela sessão gráfica.
+
+### Verificar após corrigir a configuração
+
+1. Sair da instância atual do `redshift-gtk` pelo menu do ícone e iniciá-la novamente para que leia a configuração atualizada.
+2. Consultar os processos e os métodos disponíveis:
+
+    ```bash
+    pgrep -a -x redshift-gtk
+    pgrep -a -x redshift
+    redshift -m list
+    redshift -l list
+    ```
+
+3. Consultar os parâmetros calculados:
+
+    ```bash
+    redshift -v -p
+    ```
+
+O modo `-p` imprime parâmetros e não deve alterar a tela. Com localização manual, conferir a posição, o período e a temperatura calculada. Se o comando permanecer aguardando o `geoclue2`, interrompê-lo com `Ctrl + C` e revisar se o arquivo `~/.config/redshift.conf` especifica `location-provider=manual`.
+
+4. Opcionalmente, testar diretamente o ajuste da tela. Esse teste altera temporariamente a cor; executar a restauração em seguida:
+
+    ```bash
+    redshift -O 4500
+    redshift -x
+    ```
+
+Depois de confirmado o funcionamento, repetir a ação de duração temporária desejada no menu do `redshift-gtk`.
 
 ## 7. Desinstalação
 
@@ -257,5 +305,11 @@ Acessado em: 01/11/2026.
 [6] MOZILLA.
 **Retiring the Mozilla Location Service**.
 Disponível em: <https://github.com/mozilla/ichnaea/issues/2065>.
+GitHub.
+Acessado em: 01/11/2026.
+
+[7] GNOME.
+**Launcher for the accessibility bus**.
+Disponível em: <https://github.com/GNOME/at-spi2-core/blob/main/bus/README.md>.
 GitHub.
 Acessado em: 01/11/2026.
