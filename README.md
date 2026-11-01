@@ -123,9 +123,29 @@ O resultado esperado é que `apt policy` mostre a versão instalada e a origem d
 - Aplicar temporariamente uma temperatura e brilho manuais com `redshift -O 4500 -b 0.7`. Esse comando altera a imagem da tela. Restaurar a correção de cor com `redshift -x`.
 - Verificar a ajuda local com `redshift -h` e o manual com `man redshift`.
 
+### Configuração manual sem localização automática
+
+Em instalações `Ubuntu`, usar o arquivo `~/.config/redshift.conf` (diretamente dentro de `.config`). A configuração manual evita a consulta de localização pelo `geoclue2`. Para uma sessão X11, criar ou editar o arquivo e substituir os dois valores de exemplo por coordenadas decimais do município desejado. As coordenadas ficam no arquivo local do usuário.
+
+```ini
+[redshift]
+location-provider=manual
+adjustment-method=randr
+temp-day=6500
+temp-night=4500
+
+[manual]
+lat=SUBSTITUIR_PELA_LATITUDE
+lon=SUBSTITUIR_PELA_LONGITUDE
+```
+
+Não salvar os textos `SUBSTITUIR...` literalmente. Depois de salvar, reiniciar `redshift-gtk` e usar `redshift -p` para conferir os parâmetros calculados, sem alterar a tela. A configuração e os métodos disponíveis são descritos no arquivo de exemplo do projeto upstream [4].
+
 ## 6. Diagnóstico do aviso de acessibilidade GTK
 
 A mensagem `dbind-WARNING: Couldn't connect to accessibility bus` indica que a ponte de acessibilidade GTK não conseguiu conectar-se ao barramento AT-SPI indicado no aviso. Por si só, o aviso não prova que o `redshift-gtk` falhou; confirmar separadamente se o processo inicia e se a interface funciona.
+
+No `Ubuntu 22.04`, a configuração documentada do `geoclue2` ainda aponta para a API de localização Wi-Fi do Mozilla Location Service. A Mozilla retirou o acesso de terceiros em 2024; por isso, a localização automática pode não retornar. Isso é uma causa possível, não a única. Preferir a configuração manual se não quiser depender desse serviço [5][6].
 
 1. Consultar os processos e os identificadores da sessão:
 
@@ -166,7 +186,7 @@ No ambiente desta verificação, `id -u` retornou `1000`, `XDG_RUNTIME_DIR` apon
     dpkg -l redshift redshift-gtk
     ```
 
-No resultado de `dpkg -l`, `un` indica que o pacote não está instalado e `rc` indica que o programa foi removido, mas restam arquivos de configuração do pacote. `apt remove` conserva esses arquivos; `apt purge` remove também a configuração mantida pelo gerenciador. Escolher `purge` somente se essa remoção for desejada. Configurações pessoais em `~/.config/redshift` não devem ser apagadas automaticamente.
+No resultado de `dpkg -l`, `un` indica que o pacote não está instalado e `rc` indica que o programa foi removido, mas restam arquivos de configuração do pacote. `apt remove` conserva esses arquivos; `apt purge` remove também a configuração mantida pelo gerenciador. Escolher `purge` somente se essa remoção for desejada. Configurações pessoais em `~/.config/redshift.conf` não devem ser apagadas automaticamente.
 
 4. Opcionalmente, inspecionar as dependências órfãs antes de qualquer remoção:
 
@@ -221,3 +241,21 @@ Acessado em: 31/10/2026.
 Disponível em: <https://github.com/jonls/redshift>.
 GitHub.
 Acessado em: 31/10/2026.
+
+[4] REDSHIFT CONTRIBUTORS.
+**redshift.conf.sample**.
+Disponível em: <https://github.com/jonls/redshift/blob/master/redshift.conf.sample>.
+GitHub.
+Acessado em: 01/11/2026.
+
+[5] UBUNTU DEVELOPERS.
+**Manual: geoclue.conf**.
+Disponível em: <https://manpages.ubuntu.com/manpages/jammy/man5/geoclue.5.html>.
+Ubuntu Manpages.
+Acessado em: 01/11/2026.
+
+[6] MOZILLA.
+**Retiring the Mozilla Location Service**.
+Disponível em: <https://github.com/mozilla/ichnaea/issues/2065>.
+GitHub.
+Acessado em: 01/11/2026.
